@@ -8,14 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel=ViewModel()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack{
+            Toggle("Switch", isOn: $viewModel.isTurnedOn).padding()
+            HStack{
+                Button("Increment"){
+                    viewModel.increment()
+                }
+                Text("\(viewModel.playerCount)")
+            }
+            List (viewModel.playerList){ player in
+                HStack {
+                    Text(player.name)
+                    Text(player.surname)
+                    Text(player.overall)
+                }
+                
+                
+            }
+            .listStyle(.plain)
+            .background(.thinMaterial)
+            Button("Add Player"){
+                viewModel.addItem()
+            }
         }
-        .padding()
+        
+   
     }
 }
 
